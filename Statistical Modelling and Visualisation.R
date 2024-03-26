@@ -65,7 +65,7 @@ rm(income.happiness.lm)
 data(trees)
 names(trees)
 ## Girth is diameter
-head (trees)
+head(trees)
 ## shows the first 6 rows of data in the dataset
 summary(trees)
 attach(trees)
@@ -98,7 +98,7 @@ rm(trees)
 rm(trees.lm)
 
 #############################################################################
-## Multiple linear regression 
+## Multiple linear regression
 
 ## Import the data - copy and paste from excel "heart.data"
 heart.data <- read.csv("clipboard", header = TRUE, sep = "\t")
@@ -112,7 +112,7 @@ summary(heart.data)
 ## 1.Independence of observations
 ## test both independent (explanatory) variables
 cor(biking, smoking)
-## output is 0.015, which means the correlation between 
+## output is 0.015, which means the correlation between
 ## biking and smoking is small (0.015 or 1.5%),
 ## so we can include both parameters in our model
 ## this is also a bit of judgement call on the cut of line for "what is good"
@@ -177,8 +177,8 @@ hist(breaks)
 ##data is skewed to the left
 shapiro.test(breaks)
 ##data is not normally distributed
-##as we have count data, and assumptions of lm 
-##not met we are justified to use glm with poisson family 
+##as we have count data, and assumptions of lm
+##not met we are justified to use glm with poisson family
 
 ##running the model (PP)
 m1 <- glm(breaks ~ wool + tension, data = warpbreaks, family = poisson)
@@ -193,12 +193,16 @@ dispersion = residual_deviance / residual_df
 dispersion
 ##bit of a judgement call with the results - 4.21 is high shows over dispersion
 ##good practice to report this in your write up (PP)
-##as this is a made up dataset this isn't surprising - can potential fix with running a quasipoisson model
-##read up on quasipoisson outside this class - would just add quasipoisson to the family instead of poisson
+##as this is a made up dataset this isn't surprising -
+##can potential fix with running a quasipoisson model
+##read up on quasipoisson outside this class -
+##would just add quasipoisson to the family instead of poisson
 
 ##Chi-square goodness of fit
 pchisq(210.39, 50, lower.tail = FALSE)
-##The p-value for this test is is much smaller than the significance level of 0.05. We can conclude that the data doesn't fit the model reasonably well
+##The p-value for this test is is much smaller than the
+##significance level of 0.05. We can conclude that
+##the data doesn't fit the model reasonably well
 
 ## writing up results (pp)
 
@@ -208,12 +212,13 @@ rm(warpbreaks)
 
 ###############################################################################
 ###############################################################################
-### Mixed Modelling 
+### Mixed Modelling
 
 ###############################################################################
-### Linear mixed modelling 
+### Linear mixed modelling
 
-## Load data - need to download data from the link in the powerpoint and open with Rstudios 
+## Load data - need to download data from the link
+## in the powerpoint and open with Rstudios
 attach(dragons)
 head(dragons)
 
@@ -225,34 +230,47 @@ head(dragons)
 
 hist(testScore)  # seems close to normal distribution - good!
 
-## It is good practice to  standardise your explanatory variables before proceeding - you can use scale() to do that:
-## This is so that they have a mean of zero ("centering) and standard deviation of one ("scaling")
-## It ensures that the estimated coefficients are all on the same scale, making it easier to compare effect sizes
+## It is good practice to  standardise your explanatory variables
+## before proceeding - you can use scale() to do that:
+## This is so that they have a mean of zero ("centering) and
+## standard deviation of one ("scaling")
+## It ensures that the estimated coefficients are all on the same scale,
+## making it easier to compare effect sizes
 ## This is needed for this example, but in general not always needed
 
 dragons$bodyLength2 <- scale(dragons$bodyLength)
 
 ## Back to our question: is test score affected by body length?
-## One way to analyse this data would be to try fitting a linear model to all our data, ignoring the sites and the mountain ranges for now.
+## One way to analyse this data would be to try fitting a linear model
+## to all our data, ignoring the sites and the mountain ranges for now.
 
 basic.lm <- lm(testScore ~ bodyLength2, data = dragons)
 summary(basic.lm)
 ## what does this tell us (PP)
 
 ### Assumptions?
-## Plot the residuals - the red line should be close to being flat, like the dashed grey line
+## Plot the residuals - the red line should be close to being flat,
+##like the dashed grey line
 plot(basic.lm, which = 1)  # not perfect
-## Have a quick look at the  qqplot too - point should ideally fall onto the diagonal dashed line
-plot(basic.lm, which = 2)  # a bit off at the extremes, but that's often the case; again doesn't look too bad
+## Have a quick look at the  qqplot too - point should
+## ideally fall onto the diagonal dashed line
+# a bit off at the extremes, but that's often the case;
+# again doesn't look too bad
 
-## However, what about observation independence? Are our data independent? (number 1)
+plot(basic.lm, which = 2)
+
+## However, what about observation independence?
+## Are our data independent? (number 1)
 ## We collected multiple samples from eight mountain ranges
-## It's perfectly plausible that the data from within each mountain range are more similar to each other than the data from different mountain ranges - they are correlated.
+## It's perfectly plausible that the data from within each
+## mountain range are more similar to each other than the data from
+## different mountain ranges - they are correlated.
 ## So what do we do? (PP)
 
 ## Modify the model
 
-## We want to use all the data, but account for the data coming from different mountain ranges
+## We want to use all the data, but account for the data
+## coming from different mountain ranges
 ## let's add mountain range as a fixed effect to our basic.lm
 mountain.lm <- lm(testScore ~ bodyLength2 + mountainRange, data = dragons)
 summary(mountain.lm)
@@ -278,7 +296,7 @@ anova(mixed.lmer, basic.lm)
 
 ##interpretating this outcome (PP)
 
-## checking our model assumptions 
+## checking our model assumptions
 
 plot(mixed.lmer)  # looks alright, no patterns evident
 qqnorm(resid(mixed.lmer))
@@ -294,65 +312,67 @@ rm (dragons)
 ##############################################################################
 
 #####################################################
-### Part 2: Visualising Data in R 
+### Part 2: Visualising Data in R
 #####################################################
 
 ###############################################################################
 ## scatter plots
 
-## Using "StudyTimevsExam" excel sheet 
+## Using "StudyTimevsExam" excel sheet
 ## load data
-exams<-read.csv("clipboard", header=T, sep="\t") 
-attach(exams)  
-names(exams) 
+exams <- read.csv("clipboard", header = TRUE, sep = "\t")
+attach(exams)
+names(exams)
 
 ## simple scatter plpt
 plot(Time, Score)
 
 ## plots the relationship, but not the most visually appealing is it!
-## ggplot2 is a package that you can easy change elements of a graph and build up what you want
+## ggplot2 is a package that you can easy change
+## elements of a graph and build up what you want
 
 install.packages("ggplot2")
 library(ggplot2)
 
 # Basic scatter plot
-ggplot(exams, aes(x=Time, y=Score)) + geom_point()
+ggplot(exams, aes(x = Time, y = Score)) + geom_point()
 
 # Change the point size, and shape
-ggplot(exams, aes(x=Time, y=Score)) +
-  geom_point(size=3, shape=21) 
+ggplot(exams, aes(x = Time, y = Score)) +
+  geom_point(size = 3, shape = 21)
 
-## can look online for "cheatsheets" that list all the possible size and shape options
+## can look online for "cheatsheets" that
+## list all the possible size and shape options
 
 
-ggplot(exams, aes(x=Time, y=Score, color="#E69F00")) +
-  geom_point(size=3, shape=22) +
-  labs(title="Time spent study vs exam score",
-       x="Time spent studying (hours)", y = "Exam score (out of 100)") +
-  theme_classic() 
+ggplot(exams, aes(x = Time, y = Score, color = "#E69F00")) +
+  geom_point(size = 3, shape = 22) +
+  labs(title = "Time spent study vs exam score",
+       x = "Time spent studying (hours)", y = "Exam score (out of 100)") +
+  theme_classic()
 
 detach(exams)
 rm(exams)
 
-## can also axis breaks, change the text size, lots of things! 
+## can also axis breaks, change the text size, lots of things!
 
 ###############################################################################
 ### For you to try: Scatter plot
 
-## Using "Video_Puzzle_R" excel sheet 
+## Using "Video_Puzzle_R" excel sheet
 ## load data
-puzzles<-read.csv("clipboard", header=T, sep="\t") 
-attach(puzzles)  
-names(puzzles) 
+puzzles <- read.csv("clipboard", header = TRUE, sep = "\t")
+attach(puzzles)
+names(puzzles)
 
 ## simple scatter plot
 plot(Video.Score, Puzzle.Score)
 
-ggplot(puzzles, aes(x=Video.Score, y=Puzzle.Score)) +
-  geom_point(size=4, shape=21, colour="green") +
-  labs(title="Video score vs puzzle score",
-       x="Video Score", y = "Puzzle Score") +
-  theme_classic() 
+ggplot(puzzles, aes(x = Video.Score, y = Puzzle.Score)) +
+  geom_point(size = 4, shape = 21, colour = "green") +
+  labs(title = "Video score vs puzzle score",
+       x = "Video Score", y = "Puzzle Score") +
+  theme_classic()
 
 detach(puzzles)
 rm(puzzles)
@@ -360,44 +380,45 @@ rm(puzzles)
 ## (PP)
 
 ###############################################################################
-### Boxplots 
+### Boxplots
 
 ## use "Awards_R" data
-maths<-read.csv("clipboard", header=T, sep="\t") 
-attach(maths)  
-names(maths) 
+maths <- read.csv("clipboard", header = TRUE, sep = "\t")
+attach(maths)
+names(maths)
 
 ## basic boxplot
 boxplot(MathScore ~ ProgType,
         data = maths,
-        ylab="Average Math Score",
-        xlab="Programme type")
+        ylab = "Average Math Score",
+        xlab = "Programme type")
 
-## boxplot using ggplot - lot more you can do with boxplots 
+## boxplot using ggplot - lot more you can do with boxplots
 # Basic box plot
-a <- ggplot(maths, aes(x=ProgType, y=MathScore)) + 
+a <- ggplot(maths, aes(x = ProgType, y = MathScore)) +
   geom_boxplot()
-## I am assigning the boxplot to "a" here, so that I can add to it without having to write it all out again
+## I am assigning the boxplot to "a" here,
+## so that I can add to it without having to write it all out again
 # Rotate the box plot
 a + coord_flip()
 
 # Change outlier, color, shape and size
-ggplot(maths, aes(x=ProgType, y=MathScore)) + 
-  geom_boxplot(outlier.colour="red", outlier.shape=8,
-               outlier.size=4)
+ggplot(maths, aes(x = ProgType, y = MathScore)) +
+  geom_boxplot(outlier.colour = "red", outlier.shape = 8,
+               outlier.size = 4)
 
 # Change box plot line colors by groups
-p<-ggplot(maths, aes(x=ProgType, y=MathScore, color=ProgType)) +
+p<-ggplot(maths, aes(x = ProgType, y = MathScore, color = ProgType)) +
   geom_boxplot()
 p
 # Use custom color palettes
-p+scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9"))
+p+scale_color_manual(values = c("#999999", "#E69F00", "#56B4E9"))
 # Use brewer color palettes
-p+scale_color_brewer(palette="Dark2")
+p+scale_color_brewer(palette = "Dark2")
 # change box plot fill colour
 # Use single color
-ggplot(maths, aes(x=ProgType, y=MathScore)) +
-  geom_boxplot(fill='#A4A4A4', color="black")+
+ggplot(maths, aes(x = ProgType, y = MathScore)) +
+  geom_boxplot(fill = "#A4A4A4", color = "black") +
   theme_classic()
 # Change box plot colors by groups
 p <- ggplot(maths, aes(x = ProgType, y = MathScore, fill = ProgType)) +
@@ -439,7 +460,7 @@ boxplot(Price ~ Type,
 
 ##ggplot boxplot
 a <- ggplot(bulbs, aes(x = Type, y = Price, fill = Type)) + geom_boxplot()
-a <- a + labs(title = "Price of different bulb type",x = "Type", y = "Price")
+a <- a + labs(title = "Price of different bulb type", x = "Type", y = "Price")
 a <- a + theme_classic()
 a
 
@@ -459,7 +480,7 @@ income.data <- read.csv("clipboard", header = TRUE, sep = "\t")
 attach(income.data)
 names(income.data)
 
-## 1. Plot the data points on a graph 
+## 1. Plot the data points on a graph
 income.graph <- ggplot(income.data, aes(x = income, y = happiness)) + 
   geom_point()
 income.graph
