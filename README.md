@@ -1,10 +1,19 @@
 
 # Statistics with R
 
-##### 3 workshop conducted for Statistically Analysis:
+# TO-DO: Add details here:
 
-### Workshop 1:
-### Workshop 2:
-### Workship 3:
+##### 3 workshops conducted on Statistical Analysis.
 
-# Datasets used:
+## Workshop 1: Hypothesis Testing.
+
+
+## Workshop 2: Hypothesis Testing in action.
+
+
+## Workship 3: Statistical Modelling & Visualization.
+
+
+
+## Datasets used:
+- 
