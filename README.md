@@ -22,3 +22,5 @@
 - Linear Regression
 - Linear Mixed Regression Models
 - Boxplots, Histograms, Correlation graph, Mixed regression graph.
+
+Workshop delivered by Arvin and Shubham
